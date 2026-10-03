@@ -1,0 +1,23 @@
+# Botni serverda 24/7 ishlatish uchun (Ubuntu, systemd).
+# /home/USER/nizom_bot ni o'zingizning yo'lingizga almashtiring.
+[Unit]
+Description=Nizom Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=USER
+WorkingDirectory=/home/USER/nizom_bot
+ExecStart=/home/USER/nizom_bot/.venv/bin/python main.py
+Restart=always
+RestartSec=5
+# Xavfsizlik: bot faqat o'z papkasiga yoza oladi
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/USER/nizom_bot
+
+[Install]
+WantedBy=multi-user.target
